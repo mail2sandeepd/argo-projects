@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sandy
+  name: sandy
+  namespace: sandy-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sandy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: sandy
+    spec:
+      containers:
+      - image: mail2sandeepd/sd-nginx
+        name: sandy
+        resources: {}

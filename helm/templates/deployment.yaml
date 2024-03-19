@@ -16,7 +16,7 @@ spec:
         spec:
             containers:
                 - name: app
-                  image: app-helm:{{ .Values.env.APP_VERSION }}
+                  image: mail2sandeepd/app-helm:{{ .Values.env.APP_VERSION }}
                   ports:
                     - containerPort: 3000
                   env:

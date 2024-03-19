@@ -1,4 +1,4 @@
 env:
-  APP_VERSION: latest
+  APP_VERSION: v10
 service:
   port: 30080

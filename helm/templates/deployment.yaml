@@ -16,7 +16,7 @@ spec:
         spec:
             containers:
                 - name: app
-                  image: localhost/mail2sandeepd/nginx-helm:{{ .Values.env.APP_VERSION }}
+                  image: nginx:{{ .Values.env.APP_VERSION }}
                   ports:
                     - containerPort: 3000
                   env:

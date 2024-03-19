@@ -1,2 +1,4 @@
 env:
   APP_VERSION: v1
+service:
+  port: 30080

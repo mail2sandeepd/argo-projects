@@ -1,4 +1,4 @@
 env:
-  APP_VERSION: v3
+  APP_VERSION: ''
 service:
   port: 3000

@@ -27,18 +27,22 @@ jobs:
       - name: Build Docker image
         id: build
         run: |
-          # Increment revision number
-          REV=$(($(git rev-list --count main) + 1))
-          IMAGE_TAG=${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:v${REV}
+          # Get current version from values.yaml
+          CURRENT_VERSION=$(grep 'APP_VERSION:' helm/values.yaml | awk '{print $2}')
+          # Extract version number without 'v'
+          CURRENT_VERSION_NUMBER=$(echo $CURRENT_VERSION | sed 's/v//')
+          # Increment version number
+          NEW_VERSION_NUMBER=$((CURRENT_VERSION_NUMBER + 1))
+          NEW_VERSION="v${NEW_VERSION_NUMBER}"
+          IMAGE_TAG=${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${NEW_VERSION}
           docker build -t $IMAGE_TAG .
           echo $IMAGE_TAG >> image_tag.txt
 
       - name: Set environment variable
         run: |
           IMAGE_TAG=$(cat image_tag.txt)
-          # Extract version number from IMAGE_TAG
-          APP_VERSION=$(echo $IMAGE_TAG | grep -oP '(?<=:v)\d+')
-          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "APP_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Push Docker image
         run: |
@@ -47,7 +51,7 @@ jobs:
       - name: Update values.yaml
         run: |
           cd helm
-          sed -i "s|APP_VERSION:.*|APP_VERSION: 'v${{ env.APP_VERSION }}'|" values.yaml
+          sed -i "s|APP_VERSION:.*|APP_VERSION: '${{ env.APP_VERSION }}'|" values.yaml
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           git add values.yaml

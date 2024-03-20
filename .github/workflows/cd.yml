@@ -28,7 +28,7 @@ jobs:
       id: set-env
       run: |
         # Get current version from values.yaml
-        CURRENT_VERSION=$(grep 'APP_VERSION:' helm/values.yaml | awk '{print $2}')
+        CURRENT_VERSION=$(grep 'APP_VERSION:' helm/values.yaml | awk '{print $2}' | tr -d '""')
         # Extract version number without 'v'
         CURRENT_VERSION_NUMBER=$(echo $CURRENT_VERSION | sed 's/v//')
         # Increment version number

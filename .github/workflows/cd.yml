@@ -39,14 +39,15 @@ jobs:
         NEW_VERSION="v${NEW_VERSION_NUMBER}"
         IMAGE_TAG=${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${NEW_VERSION}
         cd helm-tutorial/app
-        docker buildx build --platform linux/arm64 -t $IMAGE_TAG .
+        docker buildx build --platform linux/arm64 -t $IMAGE_TAG --output type=registry .
         echo $IMAGE_TAG >> image_tag.txt
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
         echo "APP_VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
 
     - name: Push Docker image
       run: |
-        docker --push ${{ env.IMAGE_TAG }}
+        cd helm-tutorial/app
+        docker buildx build --platform linux/arm64 -t ${{ env.IMAGE_TAG }} --push .
 
     - name: Update values.yaml
       run: |

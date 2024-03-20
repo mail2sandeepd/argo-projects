@@ -1,4 +1,4 @@
 env:
-  APP_VERSION: v10
+  APP_VERSION: 717965fb53845cb787569b583b89f7f77c3394a1
 service:
   port: 30080

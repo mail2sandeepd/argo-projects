@@ -30,15 +30,16 @@ app.listen(port, () => {
           background-size: contain;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: flex-start; /* Adjusted */
           align-items: center;
-          height: 100vh;
+          min-height: 100vh; /* Adjusted */
+          box-sizing: border-box; /* Added */
         }
         h1 {
           font-size: 3rem;
           margin-bottom: 1rem;
           text-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00, 0 0 40px #ff6f00;
-          margin-top: 2rem;
+          margin-top: 4rem; /* Adjusted */
         }
         p {
           font-size: 1.2rem;
@@ -77,15 +78,16 @@ app.get('/health', (req, res) => {
           background-size: contain;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
-          height: 100vh;
+          min-height: 100vh;
+          box-sizing: border-box;
         }
         h1 {
           font-size: 3rem;
           color: #00ff00;
           text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
-          margin-top: 2rem;
+          margin-top: 4rem;
         }
       </style>
     </head>
@@ -120,15 +122,16 @@ app.get('/', (req, res) => {
           background-size: contain;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
-          height: 100vh;
+          min-height: 100vh;
+          box-sizing: border-box;
         }
         h1 {
           font-size: 3rem;
           color: #ff6f00;
           text-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00, 0 0 40px #ff6f00;
-          margin-top: 2rem;
+          margin-top: 4rem;
         }
       </style>
     </head>

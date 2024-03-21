@@ -33,7 +33,7 @@ app.listen(port, () => {
       </style>
     </head>
     <body>
-      <h1>Hello ${process.env.NAME || 'HMH World'}!</h1>
+      <h1>Hello HMH World!</h1>
       <p>App running at http://localhost:${port}</p>
     </body>
     </html>
@@ -74,5 +74,33 @@ app.get('/health', (req, res) => {
 
 // Default route
 app.get('/', (req, res) => {
-  res.redirect('/health');
+  const name = process.env.NAME || 'HMH World';
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>${name}</title>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+        body {
+          background-color: #1c1c1c;
+          color: #fff;
+          font-family: 'Montserrat', sans-serif;
+          text-align: center;
+          padding: 2rem;
+        }
+        h1 {
+          font-size: 3rem;
+          color: #ff6f00;
+          text-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00, 0 0 40px #ff6f00;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Hello ${name}!</h1>
+    </body>
+    </html>
+  `);
 });

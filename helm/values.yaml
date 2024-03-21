@@ -1,5 +1,5 @@
 env:
   APP_VERSION: "v13"
-  NAME: "Sandeep Dwivedi"
+  NAME: "DevOps Pune"
 service:
   port: 3000

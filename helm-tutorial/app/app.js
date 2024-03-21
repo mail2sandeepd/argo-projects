@@ -20,6 +20,10 @@ app.listen(port, () => {
           font-family: 'Montserrat', sans-serif;
           text-align: center;
           padding: 2rem;
+          background-image: url('logo.png');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
         }
         h1 {
           font-size: 3rem;
@@ -57,6 +61,10 @@ app.get('/health', (req, res) => {
           font-family: 'Montserrat', sans-serif;
           text-align: center;
           padding: 2rem;
+          background-image: url('logo.png');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
         }
         h1 {
           font-size: 3rem;
@@ -90,6 +98,10 @@ app.get('/', (req, res) => {
           font-family: 'Montserrat', sans-serif;
           text-align: center;
           padding: 2rem;
+          background-image: url('logo.png');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
         }
         h1 {
           font-size: 3rem;

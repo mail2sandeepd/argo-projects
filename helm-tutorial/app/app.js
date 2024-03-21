@@ -1,7 +1,11 @@
 // Importing required modules
 const express = require('express');
 const app = express();
+const path = require('path');
 const port = 3000;
+
+// Serve static files from the current directory
+app.use(express.static(__dirname));
 
 // Start the server
 app.listen(port, () => {
@@ -20,7 +24,7 @@ app.listen(port, () => {
           font-family: 'Montserrat', sans-serif;
           text-align: center;
           padding: 2rem;
-          background-image: url('logo.png');
+          background-image: url('/logo.png');
           background-repeat: no-repeat;
           background-position: center;
           background-size: contain;
@@ -61,7 +65,7 @@ app.get('/health', (req, res) => {
           font-family: 'Montserrat', sans-serif;
           text-align: center;
           padding: 2rem;
-          background-image: url('logo.png');
+          background-image: url('/logo.png');
           background-repeat: no-repeat;
           background-position: center;
           background-size: contain;
@@ -98,7 +102,7 @@ app.get('/', (req, res) => {
           font-family: 'Montserrat', sans-serif;
           text-align: center;
           padding: 2rem;
-          background-image: url('logo.png');
+          background-image: url('/logo.png');
           background-repeat: no-repeat;
           background-position: center;
           background-size: contain;

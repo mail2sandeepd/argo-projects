@@ -1,6 +1,6 @@
 env:
   APP_VERSION: "v24"
-  NAME: "HMH Pune"
-  REPLICAS: 5
+  NAME: "HMH Pune - TSG DevOps"
+  REPLICAS: 3
 service:
   port: 3000

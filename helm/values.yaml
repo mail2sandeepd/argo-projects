@@ -1,5 +1,6 @@
 env:
   APP_VERSION: "v23"
   NAME: "HMH Pune"
+  REPLICAS: 5
 service:
   port: 3000

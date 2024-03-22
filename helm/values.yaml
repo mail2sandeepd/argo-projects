@@ -1,5 +1,5 @@
 env:
   APP_VERSION: "v22"
-  NAME: "DevOps Pune"
+  NAME: "HMH Pune"
 service:
   port: 3000

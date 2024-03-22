@@ -1,5 +1,5 @@
 env:
-  APP_VERSION: "v23"
+  APP_VERSION: "v24"
   NAME: "HMH Pune"
   REPLICAS: 5
 service:

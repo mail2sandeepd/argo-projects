@@ -2,5 +2,6 @@ env:
   APP_VERSION: "v2"
   NAME: "HMH Pune - TSG DevOps"
   REPLICAS: 3
+  IMAGE_REGISTRY: "docker.io"
 service:
   port: 3000

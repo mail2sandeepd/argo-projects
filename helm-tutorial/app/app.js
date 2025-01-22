@@ -9,7 +9,7 @@ app.use(express.static(__dirname));
 
 // Start the server
 app.listen(port, () => {
-  console.log(`App running at http://localhost:${port}`);
+  console.log(`App running at http://tcs-demo-bfsi-coe.io`);
 });
 
 // Route for the main page
@@ -56,7 +56,7 @@ app.get('/', (req, res) => {
     <body>
       <h1>Hello ${name}</h1>
       <div class="version">Version 1</div>
-      <p>App running at http://localhost:${port}</p>
+      <p>App running at http://tcs-demo-bfsi-coe.io</p>
     </body>
     </html>
   `);
@@ -88,7 +88,7 @@ app.get('/health', (req, res) => {
         }
         h1 {
           font-size: 3rem;
-          color: #00ff00;
+          color: #212420;
           text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
         }
         .version {

@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 node:16-alpine
+FROM node:16-alpine
 WORKDIR /src
 COPY . .
 RUN npm install --quiet

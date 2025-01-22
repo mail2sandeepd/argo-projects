@@ -1,5 +1,5 @@
 env:
-  APP_VERSION: "v9"
+  APP_VERSION: "v10"
   NAME: "HMH Pune - TSG DevOps"
   REPLICAS: 3
   IMAGE_REGISTRY: "docker.io"

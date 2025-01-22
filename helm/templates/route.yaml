@@ -6,7 +6,7 @@ metadata:
   name: app-route
 spec:
   port:
-    targetPort: 3000-tcp
+    targetPort: 3000
   to:
     kind: Service
     name: app-service

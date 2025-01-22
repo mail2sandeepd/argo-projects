@@ -1,6 +1,6 @@
 env:
   APP_VERSION: "v15"
-  NAME: "HMH Pune - TSG DevOps"
+  NAME: "TCS - BFSI CoE"
   REPLICAS: 3
   IMAGE_REGISTRY: "docker.io"
 service:

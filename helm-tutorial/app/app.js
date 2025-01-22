@@ -15,7 +15,7 @@ app.listen(port, () => {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>HMH World</title>
+      <title>Hello World</title>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
         body {
@@ -23,17 +23,18 @@ app.listen(port, () => {
           color: #fff;
           font-family: 'Montserrat', sans-serif;
           text-align: center;
-          padding: 2rem;
-          background-image: url('/logo.png');
-          background-repeat: no-repeat;
-          background-position: center top;
-          background-size: cover; /* Makes the logo cover the entire background */
           display: flex;
           flex-direction: column;
-          justify-content: flex-end; /* Positions content at the bottom */
+          justify-content: space-between; /* Position content at top and bottom */
           align-items: center;
           min-height: 100vh;
+          padding: 1rem;
           box-sizing: border-box;
+        }
+        .logo {
+          max-width: 100%; /* Make logo responsive */
+          height: auto;
+          margin-top: 2rem; /* Add some spacing at the top */
         }
         h1 {
           font-size: 3rem;
@@ -43,11 +44,13 @@ app.listen(port, () => {
         p {
           font-size: 1.2rem;
           color: #ccc;
+          margin-bottom: 4rem; /* Add some spacing at the bottom */
         }
       </style>
     </head>
     <body>
-      <h1>Hello HMH World!</h1>
+      <img class="logo" src="/logo.png" alt="TCS World Logo">
+      <h1>Hello TCS World!</h1>
       <p>App running at http://localhost:${port}</p>
     </body>
     </html>
@@ -66,21 +69,22 @@ app.get('/health', (req, res) => {
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
         body {
-          background-color: #bfcddb;
+          background-color: #a8f0b3;
           color: #fff;
           font-family: 'Montserrat', sans-serif;
           text-align: center;
-          padding: 2rem;
-          background-image: url('/logo.png');
-          background-repeat: no-repeat;
-          background-position: center top;
-          background-size: cover;
           display: flex;
           flex-direction: column;
-          justify-content: flex-end;
+          justify-content: space-between;
           align-items: center;
           min-height: 100vh;
+          padding: 1rem;
           box-sizing: border-box;
+        }
+        .logo {
+          max-width: 100%;
+          height: auto;
+          margin-top: 2rem;
         }
         h1 {
           font-size: 3rem;
@@ -90,6 +94,7 @@ app.get('/health', (req, res) => {
       </style>
     </head>
     <body>
+      <img class="logo" src="/logo.png" alt="TCS World Logo">
       <h1>Server is healthy!</h1>
     </body>
     </html>
@@ -98,7 +103,7 @@ app.get('/health', (req, res) => {
 
 // Default route
 app.get('/', (req, res) => {
-  const name = process.env.NAME || 'HMH World';
+  const name = process.env.NAME || 'TCS World';
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
@@ -113,17 +118,18 @@ app.get('/', (req, res) => {
           color: #fff;
           font-family: 'Montserrat', sans-serif;
           text-align: center;
-          padding: 2rem;
-          background-image: url('/logo.png');
-          background-repeat: no-repeat;
-          background-position: center top;
-          background-size: cover;
           display: flex;
           flex-direction: column;
-          justify-content: flex-end;
+          justify-content: space-between;
           align-items: center;
           min-height: 100vh;
+          padding: 1rem;
           box-sizing: border-box;
+        }
+        .logo {
+          max-width: 100%;
+          height: auto;
+          margin-top: 2rem;
         }
         h1 {
           font-size: 3rem;
@@ -133,6 +139,7 @@ app.get('/', (req, res) => {
       </style>
     </head>
     <body>
+      <img class="logo" src="/logo.png" alt="TCS World Logo">
       <h1>Hello ${name}!</h1>
     </body>
     </html>

@@ -44,7 +44,7 @@ app.listen(port, () => {
         p {
           font-size: 1.2rem;
           color: #ccc;
-          margin-bottom: 4rem; /* Add some spacing at the bottom */
+          margin-bottom: 2rem; /* Add some spacing at the bottom */
         }
       </style>
     </head>
@@ -88,7 +88,7 @@ app.get('/health', (req, res) => {
         }
         h1 {
           font-size: 3rem;
-          color: #00ff00;
+          color: #212420;
           text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
         }
       </style>
@@ -133,7 +133,7 @@ app.get('/', (req, res) => {
         }
         h1 {
           font-size: 3rem;
-          color: #ff6f00;
+          color: #141413;
           text-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00, 0 0 40px #ff6f00;
         }
       </style>

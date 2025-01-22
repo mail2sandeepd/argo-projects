@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: demo-application
+spec:
+  href: 'http://tcs-demo-bfsi-coe.io/'
+  location: ApplicationMenu
+  text: Demo Application - OpenShift
+  applicationMenu:
+    section: Demo Application SD
+    imageURL: https://i.ibb.co/pZ0Lxdb/Logo-Red-Hat-Hat-Color-RGB.png

@@ -47,7 +47,7 @@ jobs:
     - name: Push Docker image
       run: |
         cd helm-tutorial/app
-        docker buildx build --platform linux/arm64 -t ${{ env.IMAGE_TAG }} --push .
+        docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_TAG }} --push .
 
     - name: Update values.yaml
       run: |

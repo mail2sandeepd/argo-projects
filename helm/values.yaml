@@ -1,5 +1,5 @@
 env:
-  APP_VERSION: "v16"
+  APP_VERSION: "v17"
   NAME: "TCS - BFSI CoE"
   REPLICAS: 3
   IMAGE_REGISTRY: "docker.io"

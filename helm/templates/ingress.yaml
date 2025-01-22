@@ -6,7 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: punehmhdevops.io
+    - host: tcs-demo-bfsi-coe.io
       http:
         paths:
           - path: /

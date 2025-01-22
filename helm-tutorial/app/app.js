@@ -26,15 +26,14 @@ app.listen(port, () => {
           padding: 2rem;
           background-image: url('/logo.png');
           background-repeat: no-repeat;
-          background-position: center top; /* Adjust background position */
-          background-size: contain; /* Adjust the background size */
+          background-position: center top;
+          background-size: cover; /* Makes the logo cover the entire background */
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
+          justify-content: flex-end; /* Positions content at the bottom */
           align-items: center;
           min-height: 100vh;
           box-sizing: border-box;
-          padding-top: 6rem; /* Added padding to prevent overlap with the logo */
         }
         h1 {
           font-size: 3rem;
@@ -75,14 +74,13 @@ app.get('/health', (req, res) => {
           background-image: url('/logo.png');
           background-repeat: no-repeat;
           background-position: center top;
-          background-size: contain;
+          background-size: cover;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
+          justify-content: flex-end;
           align-items: center;
           min-height: 100vh;
           box-sizing: border-box;
-          padding-top: 6rem;
         }
         h1 {
           font-size: 3rem;
@@ -119,14 +117,13 @@ app.get('/', (req, res) => {
           background-image: url('/logo.png');
           background-repeat: no-repeat;
           background-position: center top;
-          background-size: contain;
+          background-size: cover;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
+          justify-content: flex-end;
           align-items: center;
           min-height: 100vh;
           box-sizing: border-box;
-          padding-top: 6rem; /* Added padding to prevent overlap */
         }
         h1 {
           font-size: 3rem;

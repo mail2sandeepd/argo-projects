@@ -26,20 +26,20 @@ app.listen(port, () => {
           padding: 2rem;
           background-image: url('/logo.png');
           background-repeat: no-repeat;
-          background-position: center;
-          background-size: contain;
+          background-position: center top; /* Adjust background position */
+          background-size: contain; /* Adjust the background size */
           display: flex;
           flex-direction: column;
-          justify-content: flex-start; /* Adjusted */
+          justify-content: flex-start;
           align-items: center;
-          min-height: 100vh; /* Adjusted */
-          box-sizing: border-box; /* Added */
+          min-height: 100vh;
+          box-sizing: border-box;
+          padding-top: 6rem; /* Added padding to prevent overlap with the logo */
         }
         h1 {
           font-size: 3rem;
           margin-bottom: 1rem;
           text-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00, 0 0 40px #ff6f00;
-          margin-top: 4rem; /* Adjusted */
         }
         p {
           font-size: 1.2rem;
@@ -74,7 +74,7 @@ app.get('/health', (req, res) => {
           padding: 2rem;
           background-image: url('/logo.png');
           background-repeat: no-repeat;
-          background-position: center;
+          background-position: center top;
           background-size: contain;
           display: flex;
           flex-direction: column;
@@ -82,12 +82,12 @@ app.get('/health', (req, res) => {
           align-items: center;
           min-height: 100vh;
           box-sizing: border-box;
+          padding-top: 6rem;
         }
         h1 {
           font-size: 3rem;
           color: #00ff00;
           text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
-          margin-top: 4rem;
         }
       </style>
     </head>
@@ -118,7 +118,7 @@ app.get('/', (req, res) => {
           padding: 2rem;
           background-image: url('/logo.png');
           background-repeat: no-repeat;
-          background-position: center;
+          background-position: center top;
           background-size: contain;
           display: flex;
           flex-direction: column;
@@ -126,12 +126,12 @@ app.get('/', (req, res) => {
           align-items: center;
           min-height: 100vh;
           box-sizing: border-box;
+          padding-top: 6rem; /* Added padding to prevent overlap */
         }
         h1 {
           font-size: 3rem;
           color: #ff6f00;
           text-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00, 0 0 40px #ff6f00;
-          margin-top: 4rem;
         }
       </style>
     </head>

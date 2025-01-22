@@ -7,6 +7,9 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 # Set the working directory
 WORKDIR /src
 
+# Set a custom npm cache directory to avoid root-owned files
+ENV NPM_CONFIG_CACHE=/home/appuser/.npm
+
 # Copy package.json and package-lock.json first to leverage Docker cache
 COPY package*.json ./
 

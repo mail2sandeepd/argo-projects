@@ -19,7 +19,7 @@ app.listen(port, () => {
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
         body {
-          background-color: #1c1c1c;
+          background-color: #bfcddb;
           color: #fff;
           font-family: 'Montserrat', sans-serif;
           text-align: center;
@@ -67,7 +67,7 @@ app.get('/health', (req, res) => {
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
         body {
-          background-color: #1c1c1c;
+          background-color: #bfcddb;
           color: #fff;
           font-family: 'Montserrat', sans-serif;
           text-align: center;
@@ -111,7 +111,7 @@ app.get('/', (req, res) => {
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
         body {
-          background-color: #1c1c1c;
+          background-color: #bfcddb;
           color: #fff;
           font-family: 'Montserrat', sans-serif;
           text-align: center;

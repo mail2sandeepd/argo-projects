@@ -1,41 +1,54 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: app-deploy
+    name: {{ .Values.env.APP_NAME }}-deploy
+    namespace: {{ .Values.env.NAMESPACE }}
     labels:
-      app: app
+      app: {{ .Values.env.APP_NAME }}
 spec:
     replicas: {{ .Values.env.REPLICAS }}
     selector:
         matchLabels:
-            app: app
+            app: {{ .Values.env.APP_NAME }}
     template:
         metadata:
             labels:
-                app: app
+                app: {{ .Values.env.APP_NAME }}
         spec:
             containers:
-                - name: app
+                - name: {{ .Values.env.APP_NAME }}
                   image: {{ .Values.env.IMAGE_REGISTRY }}/mail2sandeepd/app-helm:{{ .Values.env.APP_VERSION }}
                   ports:
-                    - containerPort: 3000
+                    - containerPort: {{ .Values.service.port }}
                   env:
-                  - name: NAME
-                    value: {{ .Values.env.NAME }}
+                    - name: NAME
+                      value: {{ .Values.env.NAME }}
+                    - name: PORT
+                      value: {{ .Values.service.port | quote }}
+                    - name: APP_HOSTNAME
+                      value: {{ .Values.env.APP_HOSTNAME }}
+                  resources:
+                    requests:
+                      cpu: {{ .Values.resources.requests.cpu }}
+                      memory: {{ .Values.resources.requests.memory }}
+                    limits:
+                      cpu: {{ .Values.resources.limits.cpu }}
+                      memory: {{ .Values.resources.limits.memory }}
                   readinessProbe:
                     httpGet:
                         path: /health
-                        port: 3000
-                    initialDelaySeconds: 10
-                    periodSeconds: 10
-                    successThreshold: 1
-                    failureThreshold: 3
+                        port: {{ .Values.service.port }}
+                    initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+                    periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+                    timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
+                    successThreshold: {{ .Values.probes.readiness.successThreshold }}
+                    failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
                   livenessProbe:
                     httpGet:
                         path: /health
-                        port: 3000
-                    initialDelaySeconds: 10
-                    periodSeconds: 10
-                    timeoutSeconds: 5
-                    successThreshold: 1
-                    failureThreshold: 3
+                        port: {{ .Values.service.port }}
+                    initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+                    periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+                    timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
+                    successThreshold: {{ .Values.probes.liveness.successThreshold }}
+                    failureThreshold: {{ .Values.probes.liveness.failureThreshold }}

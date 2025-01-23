@@ -46,12 +46,35 @@ The repository includes an automated CI/CD pipeline (`cd.yml`) that:
 1. Triggers on push to main branch
 2. Builds Docker image with incremented version
 3. Pushes the image to Docker Hub
-4. Updates the Helm chart's values.yaml with new version
-5. Commits and pushes the changes back to the repository
+4. Automatically cleans up old Docker images (keeps only last 2 versions)
+5. Updates the Helm chart's values.yaml with new version
+6. Commits and pushes the changes back to the repository
+
+### Docker Image Management
+
+The CI/CD pipeline includes automatic cleanup of Docker images:
+- Only the latest 2 versions of the image are retained
+- Older versions are automatically deleted from Docker Hub
+- This helps maintain a clean repository and reduces storage usage
+- Version numbering follows the format: `v1`, `v2`, etc.
+
+### Version History
+
+To check available versions:
+```bash
+# List available image tags
+docker images mail2sandeepd/app-helm --format "{{.Tag}}"
+
+# Pull specific version
+docker pull mail2sandeepd/app-helm:v2
+
+# Check image details
+docker inspect mail2sandeepd/app-helm:v2
+```
 
 Required GitHub Secrets:
 - `DOCKER_USERNAME`: Your Docker Hub username
-- `DOCKER_KEY`: Your Docker Hub access token
+- `DOCKER_KEY`: Your Docker Hub access token (with delete permissions)
 
 ## Helm Chart Installation
 
@@ -114,6 +137,33 @@ Required GitHub Secrets:
 - Health checks and probes
 - Automated version management
 - GitOps-based deployment
+- OpenShift Console Integration
+  - Custom application link in OpenShift console
+  - Configurable link text and section
+  - Custom application icon
+
+## OpenShift Console Integration
+
+The application includes OpenShift console integration through ConsoleLink:
+
+1. Configuration in values.yaml:
+   ```yaml
+   console:
+     text: "Demo Application - OpenShift"    # Link text in console
+     section: "Demo Application SD"          # Section in application menu
+     imageURL: "your-icon-url"              # Application icon URL
+   ```
+
+2. Features:
+   - Adds a direct link to your application in OpenShift console
+   - Appears in the Application Menu for easy access
+   - Customizable icon and text
+   - Automatically deployed with Helm chart
+
+3. Access:
+   - Open OpenShift Web Console
+   - Look for your application link in the Application Menu
+   - Click to directly access your application
 
 ## Load Testing
 

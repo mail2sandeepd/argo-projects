@@ -1,6 +1,6 @@
 env:
-  APP_VERSION: "v4"
-  NAME: "TCS - BFSI CoE"
+  APP_VERSION: "v1"
+  NAME: "Folks"
   REPLICAS: 3
   IMAGE_REGISTRY: "docker.io"
   NAMESPACE: "sd-demo"
@@ -33,3 +33,9 @@ probes:
     timeoutSeconds: 5
     successThreshold: 1
     failureThreshold: 3
+
+# OpenShift Console Link Configuration
+console:
+  text: "Demo Application - OpenShift"
+  section: "Demo Application SD"
+  imageURL: "https://i.ibb.co/pZ0Lxdb/Logo-Red-Hat-Hat-Color-RGB.png"

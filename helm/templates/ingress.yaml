@@ -1,18 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
+  name: {{ .Values.env.APP_NAME }}-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: tcs-demo-bfsi-coe.io
+    - host: {{ .Values.env.APP_HOSTNAME }}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: app-service
+                name: {{ .Values.env.APP_NAME }}-service
                 port:
-                  number: 3000
+                  number: {{ .Values.service.port }}

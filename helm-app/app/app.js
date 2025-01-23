@@ -31,34 +31,62 @@ app.get('/', (req, res) => {
           color: #000;
           font-family: 'Montserrat', sans-serif;
           text-align: center;
+          margin: 0;
+          padding: 0;
+          min-height: 100vh;
           display: flex;
           flex-direction: column;
-          justify-content: center; /* Center the content vertically */
-          align-items: center; /* Center the content horizontally */
-          min-height: 100vh;
-          padding: 1rem;
-          box-sizing: border-box;
+        }
+        .logo-container {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 2rem;
+        }
+        .logo {
+          max-width: 80%;
+          height: auto;
+          max-height: 50vh;
+          object-fit: contain;
+        }
+        .content-container {
+          padding: 2rem;
+          background: rgba(255, 255, 255, 0.9);
         }
         h1 {
-          font-size: 3rem;
+          font-size: clamp(2rem, 5vw, 3rem);
           margin-bottom: 1rem;
           text-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00, 0 0 40px #ff6f00;
         }
         .version {
-          font-size: 1.5rem;
+          font-size: clamp(1rem, 3vw, 1.5rem);
           color: #333;
+          margin-bottom: 1rem;
         }
         p {
-          font-size: 1.2rem;
-          color: #333;
-          margin-top: 1rem;
+          font-size: clamp(1rem, 2vw, 1.2rem);
+          margin: 0.5rem 0;
+        }
+        @media (max-width: 768px) {
+          .logo-container {
+            padding: 1rem;
+          }
+          .content-container {
+            padding: 1rem;
+          }
         }
       </style>
     </head>
     <body>
-      <h1>Hello ${name}</h1>
-      <div class="version">Version ${version}</div>
-      <p>App running at http://${hostname}</p>
+      <div class="logo-container">
+        <img src="/logo.png" alt="Logo" class="logo">
+      </div>
+      <div class="content-container">
+        <h1>Hello ${name}</h1>
+        <div class="version">Version - ${version}</div>
+        <p>App running at http://${hostname}</p>
+      </div>
     </body>
     </html>
   `);
@@ -102,7 +130,7 @@ app.get('/health', (req, res) => {
     </head>
     <body>
       <h1>Server is healthy!</h1>
-      <div class="version">Version ${version}</div>
+      <div class="version">Version - ${version}</div>
     </body>
     </html>
   `);

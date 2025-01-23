@@ -145,6 +145,8 @@ The repository includes a Python script for load testing:
 
 ## Monitoring and Debugging
 
+### Using kubectl (Kubernetes)
+
 1. Check pod status:
    ```bash
    kubectl get pods -n sd-demo
@@ -163,6 +165,141 @@ The repository includes a Python script for load testing:
 4. Monitor resource usage:
    ```bash
    kubectl top pods -n sd-demo
+   ```
+
+5. Port forwarding to local machine:
+   ```bash
+   kubectl port-forward svc/app-service 8080:3000 -n sd-demo
+   ```
+
+6. Check events:
+   ```bash
+   kubectl get events -n sd-demo
+   ```
+
+7. Describe deployment:
+   ```bash
+   kubectl describe deployment app-deploy -n sd-demo
+   ```
+
+### Using oc (OpenShift)
+
+1. Check pod status:
+   ```bash
+   oc get pods -n sd-demo
+   ```
+
+2. View pod logs:
+   ```bash
+   oc logs -f deployment/app-deploy -n sd-demo
+   ```
+
+3. Check HPA status:
+   ```bash
+   oc describe hpa app-hpa -n sd-demo
+   ```
+
+4. Monitor resource usage:
+   ```bash
+   oc adm top pods -n sd-demo
+   ```
+
+5. Port forwarding to local machine:
+   ```bash
+   oc port-forward svc/app-service 8080:3000 -n sd-demo
+   ```
+
+6. Check events:
+   ```bash
+   oc get events -n sd-demo
+   ```
+
+7. Describe deployment:
+   ```bash
+   oc describe deployment app-deploy -n sd-demo
+   ```
+
+8. OpenShift specific commands:
+   ```bash
+   # Get route URL
+   oc get route app-route -n sd-demo -o jsonpath='{.spec.host}'
+
+   # Check build status
+   oc get builds -n sd-demo
+
+   # View build logs
+   oc logs -f bc/app-build -n sd-demo
+
+   # Get OpenShift console URL
+   oc whoami --show-console
+
+   # Get cluster version
+   oc version
+
+   # Check cluster status
+   oc get clusterversion
+   oc get clusteroperators
+   ```
+
+### Common Troubleshooting Commands (Both Platforms)
+
+1. Check resource quotas:
+   ```bash
+   # Kubernetes
+   kubectl describe resourcequota -n sd-demo
+
+   # OpenShift
+   oc describe resourcequota -n sd-demo
+   ```
+
+2. Check limit ranges:
+   ```bash
+   # Kubernetes
+   kubectl describe limitrange -n sd-demo
+
+   # OpenShift
+   oc describe limitrange -n sd-demo
+   ```
+
+3. Get all resources in namespace:
+   ```bash
+   # Kubernetes
+   kubectl get all -n sd-demo
+
+   # OpenShift
+   oc get all -n sd-demo
+   ```
+
+4. Execute command in pod:
+   ```bash
+   # Kubernetes
+   kubectl exec -it <pod-name> -n sd-demo -- /bin/sh
+
+   # OpenShift
+   oc rsh <pod-name> -n sd-demo
+   ```
+
+5. Copy files to/from pod:
+   ```bash
+   # Kubernetes
+   kubectl cp <pod-name>:/path/to/file ./local/path -n sd-demo
+
+   # OpenShift
+   oc rsync <pod-name>:/path/to/file ./local/path -n sd-demo
+   ```
+
+### Security Context Commands
+
+1. Check security context constraints (OpenShift only):
+   ```bash
+   oc get scc
+   oc describe scc restricted
+   ```
+
+2. Check pod security policies (Kubernetes):
+   ```bash
+   kubectl get psp
+   kubectl describe psp restricted
    ```
 
 ## Development

@@ -1,0 +1,13 @@
+{{- if .Values.openshift.enabled -}}
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: {{ .Values.env.APP_NAME }}-console-link
+spec:
+  href: 'https://{{ .Values.env.APP_HOSTNAME }}'
+  location: ApplicationMenu
+  text: {{ .Values.console.text | default "Demo Application - OpenShift" }}
+  applicationMenu:
+    section: {{ .Values.console.section | default "Demo Application SD" }}
+    imageURL: {{ .Values.console.imageURL | default "https://i.ibb.co/pZ0Lxdb/Logo-Red-Hat-Hat-Color-RGB.png" }}
+{{- end }}

@@ -1,5 +1,5 @@
 env:
-  APP_VERSION: "v15"
+  APP_VERSION: "v16"
   NAME: "Folks"
   REPLICAS: 3
   IMAGE_REGISTRY: "docker.io"

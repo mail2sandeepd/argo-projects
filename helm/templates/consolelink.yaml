@@ -4,10 +4,10 @@ kind: ConsoleLink
 metadata:
   name: {{ .Values.env.APP_NAME }}-console-link
 spec:
-  href: 'https://{{ .Values.env.APP_HOSTNAME }}'
+  href: 'http://{{ .Values.env.APP_HOSTNAME }}'
   location: ApplicationMenu
   text: {{ .Values.console.text | default "Demo Application - OpenShift" }}
   applicationMenu:
     section: {{ .Values.console.section | default "Demo Application SD" }}
-    imageURL: {{ printf "https://%s/sd-logo.png" .Values.env.APP_HOSTNAME }}
+    imageURL: {{ printf "http://%s/sd-logo.png" .Values.env.APP_HOSTNAME }}
 {{- end }}

@@ -55,4 +55,4 @@ openshift:
 console:
   text: "Demo Application - OpenShift"
   section: "Demo Application SD"
-  imageURL: "https://{{ .env.APP_HOSTNAME }}/sd-logo.png"
+  imageURL: "http://{{ .env.APP_HOSTNAME }}/sd-logo.png"

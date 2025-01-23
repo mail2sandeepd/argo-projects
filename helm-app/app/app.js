@@ -2,14 +2,15 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const port = 3000;
+const port = process.env.PORT || 3000;
+const hostname = process.env.APP_HOSTNAME || 'localhost';
 
 // Serve static files from the current directory
 app.use(express.static(__dirname));
 
 // Start the server
 app.listen(port, () => {
-  console.log(`App running at http://localhost:${port}`);
+  console.log(`App running at http://${hostname}:${port}`);
 });
 
 // Route for the main page
@@ -55,7 +56,7 @@ app.get('/', (req, res) => {
     </head>
     <body>
       <h1>Hello ${name}</h1>
-      <div class="version">Version 1</div>
+      <div class="version">Version ${process.env.APP_VERSION || '1'}</div>
       <p>App running at http://${hostname}:${port}</p>
     </body>
     </html>
@@ -104,4 +105,3 @@ app.get('/health', (req, res) => {
     </html>
   `);
 });
-

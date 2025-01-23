@@ -42,21 +42,8 @@ ingress:
   enabled: true
   name: "sd-demo-k8s-ingress"
   annotations:
-    kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    nginx.ingress.kubernetes.io/service-upstream: "true"
-    # Health Check Configurations
-    nginx.ingress.kubernetes.io/healthcheck-path: /health
-    nginx.ingress.kubernetes.io/healthcheck-interval: "10"
-    nginx.ingress.kubernetes.io/healthcheck-timeout: "5"
-    nginx.ingress.kubernetes.io/healthcheck-port: "{{ .Values.service.port }}"
-    nginx.ingress.kubernetes.io/healthy-threshold: "3"
-    nginx.ingress.kubernetes.io/unhealthy-threshold: "3"
-    # Enable monitoring
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "{{ .Values.service.port }}"
-    prometheus.io/path: "/metrics"
+    kubernetes.io/ingress.class: "nginx"
 
 # OpenShift specific configuration
 openshift:

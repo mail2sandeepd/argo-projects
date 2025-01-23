@@ -25,6 +25,8 @@ spec:
                       value: {{ .Values.env.NAME }}
                     - name: PORT
                       value: {{ .Values.service.port | quote }}
+                    - name: APP_VERSION
+                      value: {{ .Values.env.APP_VERSION }}
                     - name: APP_HOSTNAME
                       value: {{ .Values.env.ROUTE_HOSTNAME }}
                     - name: APP_HOSTNAME

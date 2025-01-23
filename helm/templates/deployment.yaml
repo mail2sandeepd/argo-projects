@@ -26,6 +26,8 @@ spec:
                     - name: PORT
                       value: {{ .Values.service.port | quote }}
                     - name: APP_HOSTNAME
+                      value: {{ .Values.env.ROUTE_HOSTNAME }}
+                    - name: APP_HOSTNAME
                       value: {{ .Values.env.APP_HOSTNAME }}
                   resources:
                     requests:

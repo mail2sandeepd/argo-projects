@@ -352,6 +352,77 @@ The repository includes a Python script for load testing:
    kubectl describe psp restricted
    ```
 
+## Application Access
+
+The application can be accessed through multiple methods:
+
+### OpenShift Route (HTTPS)
+The application is exposed via OpenShift Route with HTTPS:
+```yaml
+# Route Configuration (values.yaml)
+env:
+  ROUTE_HOSTNAME: "sd-demo-route-application.io"
+
+# Route specification
+spec:
+  host: {{ .Values.env.ROUTE_HOSTNAME }}
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+```
+
+Access URL: `https://sd-demo-route-application.io`
+
+### Kubernetes/OpenShift Ingress (HTTP)
+The application is also accessible via Ingress:
+```yaml
+# Ingress Configuration (values.yaml)
+env:
+  INGRESS_HOSTNAME: "sd-demo-ingress-application.io"
+
+ingress:
+  enabled: true
+  name: "sd-demo-k8s-ingress"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+```
+
+Access URL: `http://sd-demo-ingress-application.io`
+
+### Verifying Access
+
+1. OpenShift Route:
+   ```bash
+   # Get route URL
+   oc get route app-route -o jsonpath='{.spec.host}'
+   
+   # Test HTTPS access
+   curl -k https://sd-demo-route-application.io
+   ```
+
+2. Ingress:
+   ```bash
+   # Get ingress URL
+   kubectl get ingress sd-demo-k8s-ingress -n sd-demo -o jsonpath='{.spec.rules[0].host}'
+   
+   # Test HTTP access
+   curl http://sd-demo-ingress-application.io
+   ```
+
+### DNS Configuration
+Make sure to configure your DNS or local hosts file to point both hostnames to your cluster:
+```bash
+# Example /etc/hosts entries
+<cluster-ip> sd-demo-route-application.io
+<cluster-ip> sd-demo-ingress-application.io
+```
+
+### Access Methods Summary
+- **Route Access**: `https://sd-demo-route-application.io` (HTTPS)
+- **Ingress Access**: `http://sd-demo-ingress-application.io` (HTTP)
+- **Console Access**: Available through OpenShift Console Link
+
 ## HTTPS Configuration
 
 The application supports HTTPS through both OpenShift Routes and Kubernetes Ingress:
@@ -440,7 +511,7 @@ For Kubernetes environments, the application uses Ingress with TLS:
    oc get route app-route -o yaml
    
    # Test HTTPS access
-   curl -k https://sd-demo-application.io
+   curl -k https://sd-demo-route-application.io
    ```
 
 2. Kubernetes Ingress:
@@ -487,3 +558,213 @@ To make changes to the application:
 ## Support
 
 For issues and feature requests, please create an issue in the GitHub repository.
+
+## Application Stack Overview
+
+### 1. Application Components
+- **Backend**: Node.js Express application
+- **Container**: Docker-based containerization
+- **Orchestration**: Kubernetes/OpenShift
+- **Package Management**: Helm Chart
+- **CI/CD**: GitHub Actions with ArgoCD
+- **Access Methods**: OpenShift Route (HTTPS) and Kubernetes Ingress (HTTP)
+
+### 2. Directory Structure
+```
+.
+├── helm-app/                      # Application source code
+│   └── app/
+│       ├── app.js                 # Main application file
+│       ├── Dockerfile            # Container build instructions
+│       ├── package.json          # Node.js dependencies
+│       └── sd-logo.png           # Application logo
+├── helm/                         # Helm chart configuration
+│   ├── Chart.yaml               # Chart metadata
+│   ├── values.yaml              # Configuration values
+│   └── templates/               # Kubernetes/OpenShift templates
+│       ├── deployment.yaml      # Pod deployment configuration
+│       ├── service.yaml         # Service configuration
+│       ├── route.yaml           # OpenShift route (HTTPS)
+│       ├── ingress.yaml         # Kubernetes ingress (HTTP)
+│       ├── hpa.yaml             # Horizontal Pod Autoscaler
+│       └── consolelink.yaml     # OpenShift console integration
+└── .github/
+    └── workflows/
+        └── cd.yaml              # CI/CD pipeline configuration
+```
+
+### 3. Application Configuration
+
+#### Environment Variables
+```yaml
+env:
+  APP_VERSION: "v12"              # Application version
+  NAME: "Folks"                   # Application name
+  NAMESPACE: "sd-demo"            # Kubernetes namespace
+  APP_NAME: "app"                 # Component name
+  # Access Configuration
+  ROUTE_HOSTNAME: "sd-demo-route-application.io"     # HTTPS access
+  INGRESS_HOSTNAME: "sd-demo-ingress-application.io" # HTTP access
+  APP_HOSTNAME: "sd-demo-route-application.io"       # Default hostname
+```
+
+#### Resource Management
+```yaml
+resources:
+  requests:
+    cpu: "200m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+```
+
+### 4. Access Methods
+
+#### OpenShift Route (HTTPS)
+- **URL**: https://sd-demo-route-application.io
+- **Features**:
+  - Edge TLS termination
+  - Automatic HTTP to HTTPS redirect
+  - Integrated with OpenShift console
+
+#### Kubernetes Ingress (HTTP)
+- **URL**: http://sd-demo-ingress-application.io
+- **Features**:
+  - Standard HTTP access
+  - Nginx ingress controller
+  - Works on both Kubernetes and OpenShift
+
+### 5. CI/CD Pipeline
+
+#### GitHub Actions Workflow
+1. **Build Stage**:
+   - Builds Docker image
+   - Increments version
+   - Pushes to Docker Hub
+
+2. **Cleanup Stage**:
+   - Maintains only last 2 versions
+   - Automatically removes old images
+
+3. **Deploy Stage**:
+   - Updates Helm values
+   - Commits changes
+   - Triggers ArgoCD sync
+
+### 6. Monitoring and Scaling
+
+#### Health Checks
+```yaml
+probes:
+  readiness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  liveness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+```
+
+#### Auto-scaling
+- HPA configured for CPU-based scaling
+- Min replicas: {{ .Values.env.REPLICAS }}
+- Max replicas: {{ .Values.env.MAX_REPLICAS }}
+
+### 7. Security Features
+
+#### OpenShift Route
+- HTTPS with edge termination
+- Automatic certificate management
+- Secure console integration
+
+#### Access Control
+- Namespace isolation
+- Resource quotas
+- Network policies (if configured)
+
+### 8. Development Workflow
+
+1. **Local Development**:
+   ```bash
+   # Start local development
+   cd helm-app/app
+   npm install
+   npm run dev
+   ```
+
+2. **Testing Changes**:
+   ```bash
+   # Build and test locally
+   docker build -t app-helm:local .
+   docker run -p 3000:3000 app-helm:local
+   ```
+
+3. **Deployment**:
+   ```bash
+   # Push changes to main branch
+   git push origin main
+   
+   # Watch deployment
+   oc get pods -w -n sd-demo
+   ```
+
+### 9. Verification Commands
+
+#### OpenShift Route
+```bash
+# Get route URL
+oc get route app-route -o jsonpath='{.spec.host}'
+
+# Test HTTPS access
+curl -k https://sd-demo-route-application.io
+```
+
+#### Kubernetes Ingress
+```bash
+# Get ingress URL
+kubectl get ingress sd-demo-k8s-ingress -n sd-demo
+
+# Test HTTP access
+curl http://sd-demo-ingress-application.io
+```
+
+### 10. Maintenance Tasks
+
+1. **Version Management**:
+   - Latest versions in Docker Hub
+   - Version history in values.yaml
+   - Automatic cleanup of old versions
+
+2. **Resource Monitoring**:
+   ```bash
+   # Check resource usage
+   oc adm top pods -n sd-demo
+   
+   # View application logs
+   oc logs -f deployment/app-deploy -n sd-demo
+   ```
+
+3. **Scaling**:
+   ```bash
+   # Manual scaling
+   oc scale deployment/app-deploy --replicas=5 -n sd-demo
+   
+   # Check HPA status
+   oc get hpa -n sd-demo
+   ```
+
+4. **Troubleshooting**:
+   ```bash
+   # Check events
+   oc get events -n sd-demo
+   
+   # Debug pod
+   oc debug deployment/app-deploy -n sd-demo
+   ```
+
+### 11. DNS Configuration
+Configure your DNS or local hosts file:
+```bash
+# /etc/hosts
+<cluster-ip> sd-demo-route-application.io
+<cluster-ip> sd-demo-ingress-application.io

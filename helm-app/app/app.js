@@ -10,7 +10,7 @@ app.use(express.static(__dirname));
 
 // Start the server
 app.listen(port, () => {
-  console.log(`App running at http://${hostname}:${port}`);
+  console.log(`App running at http://${hostname}}`);
 });
 
 // Route for the main page
@@ -57,7 +57,7 @@ app.get('/', (req, res) => {
     <body>
       <h1>Hello ${name}</h1>
       <div class="version">Version ${process.env.APP_VERSION || '1'}</div>
-      <p>App running at http://${hostname}:${port}</p>
+      <p>App running at http://${hostname}}</p>
     </body>
     </html>
   `);
@@ -89,7 +89,7 @@ app.get('/health', (req, res) => {
         }
         h1 {
           font-size: 3rem;
-          color: #00ff00;
+          color: #212420;
           text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
         }
         .version {
@@ -100,7 +100,7 @@ app.get('/health', (req, res) => {
     </head>
     <body>
       <h1>Server is healthy!</h1>
-      <div class="version">Version 1</div>
+      <div class="version">Version ${process.env.APP_VERSION || '1'}</div>
     </body>
     </html>
   `);

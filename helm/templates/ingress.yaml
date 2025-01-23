@@ -1,12 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.name | default (printf "%s-ingress" .Values.env.APP_NAME) }}
+  name: {{ .Values.ingress.name }}
   namespace: {{ .Values.env.NAMESPACE }}
   annotations:
-    {{- range $key, $value := .Values.ingress.annotations }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - host: {{ .Values.env.INGRESS_HOSTNAME }}
@@ -18,4 +16,6 @@ spec:
               service:
                 name: {{ .Values.env.APP_NAME }}-service
                 port:
-                  number: {{ .Values.service.port }}
+                  number:  {{ .Values.service.port }}
+
+                  

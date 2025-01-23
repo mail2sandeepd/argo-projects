@@ -10,7 +10,41 @@ app.use(express.static(__dirname));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'healthy' });
+  const healthcheck = {
+    status: 'healthy',
+    uptime: process.uptime(),
+    timestamp: Date.now(),
+    memory: process.memoryUsage(),
+    version: process.env.APP_VERSION || 'v1',
+    hostname: process.env.APP_HOSTNAME || 'localhost'
+  };
+  
+  try {
+    res.status(200).json(healthcheck);
+  } catch (error) {
+    healthcheck.status = 'unhealthy';
+    healthcheck.error = error.message;
+    res.status(503).json(healthcheck);
+  }
+});
+
+// Metrics endpoint for Prometheus
+app.get('/metrics', (req, res) => {
+  const metrics = {
+    process_uptime_seconds: process.uptime(),
+    process_memory_rss: process.memoryUsage().rss,
+    process_memory_heap_total: process.memoryUsage().heapTotal,
+    process_memory_heap_used: process.memoryUsage().heapUsed,
+    process_start_time: Date.now() - (process.uptime() * 1000)
+  };
+  
+  let prometheusMetrics = '';
+  Object.entries(metrics).forEach(([key, value]) => {
+    prometheusMetrics += `# TYPE ${key} gauge\n${key} ${value}\n`;
+  });
+  
+  res.set('Content-Type', 'text/plain');
+  res.send(prometheusMetrics);
 });
 
 // Start the server

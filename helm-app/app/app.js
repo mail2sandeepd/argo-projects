@@ -10,19 +10,20 @@ app.use(express.static(__dirname));
 
 // Start the server
 app.listen(port, () => {
-  console.log(`App running at http://${hostname}}`);
+  console.log(`App running at http://${hostname}`);
 });
 
 // Route for the main page
 app.get('/', (req, res) => {
   const name = process.env.NAME || 'TCS World';
+  const version = process.env.APP_VERSION || 'v1';
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>${name} - v1</title>
+      <title>${name} - ${version}</title>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
         body {
@@ -56,8 +57,8 @@ app.get('/', (req, res) => {
     </head>
     <body>
       <h1>Hello ${name}</h1>
-      <div class="version">Version ${process.env.APP_VERSION || '1'}</div>
-      <p>App running at http://${hostname}}</p>
+      <div class="version">Version ${version}</div>
+      <p>App running at http://${hostname}</p>
     </body>
     </html>
   `);
@@ -65,13 +66,14 @@ app.get('/', (req, res) => {
 
 // Route for checking server health
 app.get('/health', (req, res) => {
+  const version = process.env.APP_VERSION || 'v1';
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Server Health - v1</title>
+      <title>Server Health - ${version}</title>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
         body {
@@ -100,7 +102,7 @@ app.get('/health', (req, res) => {
     </head>
     <body>
       <h1>Server is healthy!</h1>
-      <div class="version">Version ${process.env.APP_VERSION || '1'}</div>
+      <div class="version">Version ${version}</div>
     </body>
     </html>
   `);

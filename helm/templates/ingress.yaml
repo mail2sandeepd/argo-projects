@@ -3,11 +3,14 @@ kind: Ingress
 metadata:
   name: {{ .Values.ingress.name | default (printf "%s-ingress" .Values.env.APP_NAME) }}
   namespace: {{ .Values.env.NAMESPACE }}
+  labels:
+    app: {{ .Values.env.APP_NAME }}
   annotations:
     {{- range $key, $value := .Values.ingress.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
+  ingressClassName: nginx
   rules:
     - host: {{ .Values.env.INGRESS_HOSTNAME }}
       http:

@@ -352,6 +352,126 @@ The repository includes a Python script for load testing:
    kubectl describe psp restricted
    ```
 
+## HTTPS Configuration
+
+The application supports HTTPS through both OpenShift Routes and Kubernetes Ingress:
+
+### OpenShift Route (TLS Edge Termination)
+
+The application automatically configures OpenShift routes with edge TLS termination:
+```yaml
+# Values configuration
+openshift:
+  enabled: true  # Enables OpenShift-specific resources
+
+# Route configuration (automatic)
+spec:
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+```
+
+Benefits:
+- Automatic TLS termination at the router
+- HTTP to HTTPS redirection
+- No manual certificate management required
+- Integrated with OpenShift's built-in certificate management
+
+### Kubernetes Ingress (TLS)
+
+For Kubernetes environments, the application uses Ingress with TLS:
+
+1. Create TLS Secret:
+   ```bash
+   # Generate self-signed certificate (for development)
+   openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+     -keyout tls.key -out tls.crt \
+     -subj "/CN=sd-demo-application.io"
+
+   # Create Kubernetes secret
+   kubectl create secret tls sd-demo-tls \
+     --cert=tls.crt \
+     --key=tls.key \
+     -n sd-demo
+   ```
+
+2. Configuration in values.yaml:
+   ```yaml
+   ingress:
+     enabled: true
+     name: "sd-demo-ingress"
+     annotations:
+       nginx.ingress.kubernetes.io/ssl-redirect: "true"
+       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+       nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+     tls:
+       enabled: true
+       secretName: "sd-demo-tls"
+   ```
+
+### Additional TLS Options
+
+1. **Let's Encrypt Integration**:
+   ```yaml
+   annotations:
+     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+     kubernetes.io/tls-acme: "true"
+   ```
+
+2. **Custom Certificate Management**:
+   - Using HashiCorp Vault for certificate management
+   - Integration with corporate PKI infrastructure
+   - Certificate rotation automation
+
+3. **Advanced Security Options**:
+   ```yaml
+   annotations:
+     nginx.ingress.kubernetes.io/ssl-ciphers: "ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384"
+     nginx.ingress.kubernetes.io/ssl-protocols: "TLSv1.2 TLSv1.3"
+     nginx.ingress.kubernetes.io/hsts: "true"
+     nginx.ingress.kubernetes.io/hsts-max-age: "31536000"
+   ```
+
+### Verifying HTTPS Configuration
+
+1. OpenShift Route:
+   ```bash
+   # Check route configuration
+   oc get route app-route -o yaml
+   
+   # Test HTTPS access
+   curl -k https://sd-demo-application.io
+   ```
+
+2. Kubernetes Ingress:
+   ```bash
+   # Check ingress configuration
+   kubectl get ingress sd-demo-ingress -n sd-demo
+   
+   # Check TLS secret
+   kubectl get secret sd-demo-tls -n sd-demo
+   
+   # Test HTTPS access
+   curl -k https://sd-demo-application.io
+   ```
+
+### Troubleshooting HTTPS
+
+1. Certificate Issues:
+   ```bash
+   # Check certificate validity
+   openssl s_client -connect sd-demo-application.io:443 -servername sd-demo-application.io
+   
+   # View certificate details
+   echo | openssl s_client -servername sd-demo-application.io \
+     -connect sd-demo-application.io:443 2>/dev/null | openssl x509 -text
+   ```
+
+2. Common Issues:
+   - Certificate not trusted: Add CA certificate to trusted roots
+   - Certificate mismatch: Ensure hostname matches certificate CN/SAN
+   - TLS handshake failure: Check TLS version compatibility
+
 ## Development
 
 To make changes to the application:

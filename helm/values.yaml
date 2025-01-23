@@ -34,6 +34,19 @@ probes:
     successThreshold: 1
     failureThreshold: 3
 
+# Ingress Configuration
+ingress:
+  enabled: true
+  name: "sd-demo-ingress"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+  tls:
+    enabled: true
+    secretName: "sd-demo-tls"
+
 # OpenShift specific configuration
 openshift:
   enabled: true  # Set to true when deploying on OpenShift

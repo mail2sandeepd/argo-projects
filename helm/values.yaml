@@ -1,7 +1,35 @@
 env:
-  APP_VERSION: "v20"
+  APP_VERSION: "v1"
   NAME: "TCS - BFSI CoE"
   REPLICAS: 3
   IMAGE_REGISTRY: "docker.io"
+  NAMESPACE: "sd-demo"
+  APP_NAME: "app"
+  APP_HOSTNAME: "sd-demo-application.io"
+  MAX_REPLICAS: 10
+
 service:
   port: 3000
+  node_port: 30080
+
+resources:
+  requests:
+    cpu: "200m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+
+probes:
+  readiness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 3
+  liveness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 3

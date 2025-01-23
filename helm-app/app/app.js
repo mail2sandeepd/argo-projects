@@ -9,49 +9,54 @@ app.use(express.static(__dirname));
 
 // Start the server
 app.listen(port, () => {
-  console.log(`
+  console.log(`App running at http://localhost:${port}`);
+});
+
+// Route for the main page
+app.get('/', (req, res) => {
+  const name = process.env.NAME || 'TCS World';
+  res.send(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>TCS World</title>
+      <title>${name} - v1</title>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
         body {
-          background-color: #bfcddb;
-          color: #fff;
+          background-color: #fff;
+          color: #000;
           font-family: 'Montserrat', sans-serif;
           text-align: center;
           display: flex;
           flex-direction: column;
-          justify-content: space-between; /* Position content at top and bottom */
-          align-items: center;
+          justify-content: center; /* Center the content vertically */
+          align-items: center; /* Center the content horizontally */
           min-height: 100vh;
           padding: 1rem;
           box-sizing: border-box;
-        }
-        .logo {
-          max-width: 100%; /* Make logo responsive */
-          height: auto;
-          margin-top: 2rem; /* Add some spacing at the top */
         }
         h1 {
           font-size: 3rem;
           margin-bottom: 1rem;
           text-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00, 0 0 40px #ff6f00;
         }
+        .version {
+          font-size: 1.5rem;
+          color: #333;
+        }
         p {
           font-size: 1.2rem;
-          color: #ccc;
-          margin-bottom: 2rem; /* Add some spacing at the bottom */
+          color: #333;
+          margin-top: 1rem;
         }
       </style>
     </head>
     <body>
-      <img class="logo" src="/logo.png" alt="TCS World Logo">
-      <h1>Hello TCS World!</h1>
-      <p>App running at http://localhost:${port}</p>
+      <h1>Hello ${name}</h1>
+      <div class="version">Version 1</div>
+      <p>App running at http://${hostname}:${port}</p>
     </body>
     </html>
   `);
@@ -65,83 +70,38 @@ app.get('/health', (req, res) => {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Server Health</title>
+      <title>Server Health - v1</title>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
         body {
-          background-color: #a8f0b3;
-          color: #fff;
+          background-color: #fff;
+          color: #000;
           font-family: 'Montserrat', sans-serif;
           text-align: center;
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
-          align-items: center;
+          justify-content: center; /* Center the content vertically */
+          align-items: center; /* Center the content horizontally */
           min-height: 100vh;
           padding: 1rem;
           box-sizing: border-box;
         }
-        .logo {
-          max-width: 100%;
-          height: auto;
-          margin-top: 2rem;
-        }
         h1 {
           font-size: 3rem;
-          color: #212420;
+          color: #00ff00;
           text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
+        }
+        .version {
+          font-size: 1.5rem;
+          color: #333;
         }
       </style>
     </head>
     <body>
-      <img class="logo" src="/logo.png" alt="TCS World Logo">
       <h1>Server is healthy!</h1>
+      <div class="version">Version 1</div>
     </body>
     </html>
   `);
 });
 
-// Default route
-app.get('/', (req, res) => {
-  const name = process.env.NAME || 'TCS World';
-  res.send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>${name}</title>
-      <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
-        body {
-          background-color: #bfcddb;
-          color: #fff;
-          font-family: 'Montserrat', sans-serif;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: center;
-          min-height: 100vh;
-          padding: 1rem;
-          box-sizing: border-box;
-        }
-        .logo {
-          max-width: 100%;
-          height: auto;
-          margin-top: 2rem;
-        }
-        h1 {
-          font-size: 3rem;
-          color: #141413;
-          text-shadow: 0 0 10px #ff6f00, 0 0 20px #ff6f00, 0 0 30px #ff6f00, 0 0 40px #ff6f00;
-        }
-      </style>
-    </head>
-    <body>
-      <img class="logo" src="/logo.png" alt="TCS World Logo">
-      <h1>Hello ${name}!</h1>
-    </body>
-    </html>
-  `);
-});

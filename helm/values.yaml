@@ -5,7 +5,10 @@ env:
   IMAGE_REGISTRY: "docker.io"
   NAMESPACE: "sd-demo"
   APP_NAME: "app"
-  APP_HOSTNAME: "sd-demo-application.io"
+  # Hostnames for different access methods
+  ROUTE_HOSTNAME: "sd-demo-route-application.io"    # OpenShift Route hostname (HTTPS)
+  INGRESS_HOSTNAME: "sd-demo-ingress-application.io"  # Kubernetes Ingress hostname (HTTP)
+  APP_HOSTNAME: "sd-demo-route-application.io"    # Default application hostname (same as ROUTE_HOSTNAME)
   MAX_REPLICAS: 10
 
 service:
@@ -37,15 +40,10 @@ probes:
 # Ingress Configuration
 ingress:
   enabled: true
-  name: "sd-demo-ingress"
+  name: "sd-demo-k8s-ingress"
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-  tls:
-    enabled: true
-    secretName: "sd-demo-tls"
+    kubernetes.io/ingress.class: "nginx"
 
 # OpenShift specific configuration
 openshift:
@@ -55,4 +53,4 @@ openshift:
 console:
   text: "Demo Application - OpenShift"
   section: "Demo Application SD"
-  imageURL: "http://{{ .env.APP_HOSTNAME }}/sd-logo.png"
+  imageURL: "https://{{ .env.ROUTE_HOSTNAME }}/sd-logo.png"

@@ -137,6 +137,33 @@ Required GitHub Secrets:
 - Health checks and probes
 - Automated version management
 - GitOps-based deployment
+- OpenShift Console Integration
+  - Custom application link in OpenShift console
+  - Configurable link text and section
+  - Custom application icon
+
+## OpenShift Console Integration
+
+The application includes OpenShift console integration through ConsoleLink:
+
+1. Configuration in values.yaml:
+   ```yaml
+   console:
+     text: "Demo Application - OpenShift"    # Link text in console
+     section: "Demo Application SD"          # Section in application menu
+     imageURL: "your-icon-url"              # Application icon URL
+   ```
+
+2. Features:
+   - Adds a direct link to your application in OpenShift console
+   - Appears in the Application Menu for easy access
+   - Customizable icon and text
+   - Automatically deployed with Helm chart
+
+3. Access:
+   - Open OpenShift Web Console
+   - Look for your application link in the Application Menu
+   - Click to directly access your application
 
 ## Load Testing
 

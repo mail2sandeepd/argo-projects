@@ -39,4 +39,4 @@ pipeline:
                     connectorRef: sddemo
                     repo: mail2sandeepd/harness-demo
                     tags: <+input>
-                    dockerfile: helm-app/app
+                    dockerfile: helm-app/app/Dockerfile

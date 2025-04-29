@@ -1,0 +1,42 @@
+pipeline:
+  name: harness-demo
+  identifier: harnessdemo
+  projectIdentifier: devops001
+  orgIdentifier: TCS
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: sddemogit
+        repoName: argo-projects
+        build: <+input>
+  stages:
+    - stage:
+        name: image-build
+        identifier: imagebuild
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: harnessdemo
+              namespace: harness-demo
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: sddemo
+                    repo: mail2sandeepd/harness-demo
+                    tags: <+input>
+                    dockerfile: helm-app/app

@@ -40,3 +40,4 @@ pipeline:
                     repo: mail2sandeepd/harness-demo
                     tags: <+input>
                     dockerfile: helm-app/app/Dockerfile
+                    context: helm-app/app/
